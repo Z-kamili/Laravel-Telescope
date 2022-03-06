@@ -45,7 +45,20 @@ Route::get('/cache',function(){
       return Cache::get('user');
   }
   Cache::put('user',User::find(1),3);
-  
+
   return 'User cached for 8 seconds';
+
+});
+
+Route::get('/dumps',function(){
+
+    $user1 = User::find(1)->toArray();
+    // $user2 = User::find(2)->toArray();
+
+    dump($user1);
+    // dump($user2);
+
+    return 'Dump completed';
+
 
 });
