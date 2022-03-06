@@ -2,7 +2,9 @@
 
 use App\Events\SomeEvent;
 use App\Jobs\SomeJob;
+use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
@@ -70,3 +72,13 @@ Route::get('/events',function(){
 
     return 'Event fired';
 });
+
+Route::get('/exceptions',function(){
+
+    throw new Exception('A new exception was thrown!');
+
+});
+
+Route::get('/posts/{post}/edit',function(Post $post,Request $request){
+    return 'View for editing post';
+})->middleware('can:update,post');
