@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\SomeEvent;
 use App\Jobs\SomeJob;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
@@ -61,4 +62,11 @@ Route::get('/dumps',function(){
     return 'Dump completed';
 
 
+});
+
+Route::get('/events',function(){
+
+    event(new SomeEvent(User::find(1)));
+
+    return 'Event fired';
 });
