@@ -2,10 +2,14 @@
 
 use App\Events\SomeEvent;
 use App\Jobs\SomeJob;
+use App\Mail\OrderShipped;
 use App\Models\Post;
 use App\Models\User;
+use App\Notifications\InvoicePaid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,3 +86,36 @@ Route::get('/exceptions',function(){
 Route::get('/posts/{post}/edit',function(Post $post,Request $request){
     return 'View for editing post';
 })->middleware('can:update,post');
+
+Route::get('/logs',function(){
+
+    Log::emergency('Emergency');
+    Log::alert('Alert');
+    Log::critical('Critical');
+    Log::error('Error');
+    Log::warning('Warning');
+    Log::notice('Notice');
+    Log::info('Info');
+    Log::debug('Debug');
+    return 'Stuff was logged.';
+    
+
+});
+
+Route::get('/mail',function(){
+
+    Mail::to('someone@someone.com')->send(new OrderShipped);
+    return 'Mail sent.';
+
+});
+Route::get('/notification',function(){
+
+    $user = User::find(1);
+
+    $user->notify(new InvoicePaid);
+
+    return 'Notification sent';
+
+});
+
+
